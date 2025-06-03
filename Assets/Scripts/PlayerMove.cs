@@ -1,44 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPun
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 7f;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
+    public float jumpForce = 5f;
+    public Rigidbody2D rb;
 
-    private Rigidbody2D rb;
-    public bool isGrounded;
+    private bool isGrounded = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        transform.localPosition = new Vector3(-1, -1.1f, 0);
     }
-
     void Update()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             float moveInput = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+            Vector2 vector2 = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            rb.velocity = vector2;
 
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
-        }        
+        }
     }
-    void OnDrawGizmosSelected()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, 0.1f);
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isGrounded = false;
+        }
     }
 }
-
-

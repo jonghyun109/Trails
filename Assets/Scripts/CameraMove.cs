@@ -15,20 +15,25 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F) && !isRotating)
+        {
+            changeView = !changeView;
 
-        if (changeView && !isRotating)
-        {
-            topView.Priority = 11;
-            platformView.Priority = 10;
-            StartCoroutine(SmoothRotate(playerTF, Quaternion.Euler(30f, 0f, 0f), 1f));
-        }
-        else if (!changeView && !isRotating)
-        {
-            topView.Priority = 10;
-            platformView.Priority = 11;
-            StartCoroutine(SmoothRotate(playerTF, Quaternion.Euler(0f, 0f, 0f), 1f));
+            if (changeView)
+            {
+                topView.Priority = 11;
+                platformView.Priority = 10;
+                StartCoroutine(SmoothRotate(playerTF, Quaternion.Euler(30f, 0f, 0f), 1f));
+            }
+            else
+            {
+                topView.Priority = 10;
+                platformView.Priority = 11;
+                StartCoroutine(SmoothRotate(playerTF, Quaternion.Euler(0f, 0f, 0f), 1f));
+            }
         }
     }
+
     IEnumerator SmoothRotate(Transform t, Quaternion targetRot, float duration)
     {
         isRotating = true;

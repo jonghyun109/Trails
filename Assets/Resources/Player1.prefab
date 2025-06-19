@@ -135,8 +135,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -144,9 +144,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &3073199255133367712
 CapsuleCollider2D:
@@ -195,13 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247cb4d445911c245bb0edcdb9f0b3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 7
-  groundCheck: {fileID: 5468520792151479615}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  isGrounded: 0
+  moveSpeed: 25
+  jumpForce: 20
+  rb: {fileID: 0}
 --- !u!114 &3565858194214452343
 MonoBehaviour:
   m_ObjectHideFlags: 0

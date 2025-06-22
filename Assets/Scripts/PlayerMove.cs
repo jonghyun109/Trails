@@ -1,46 +1,63 @@
-using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviourPun
+public class PlayerController : WalkerBase
 {
-    public float moveSpeed = 5f;
+
     public float jumpForce = 5f;
     public Rigidbody2D rb;
 
-    private bool isGrounded = false;
+    public Transform groundCheck;
+    public float groundCheckDistance = 0.1f;
+    public LayerMask groundLayer;
+
+    private bool isGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        MoveSpeed = 10f;
+
     }
+
     void Update()
     {
-        if (photonView.IsMine)
+        Debug.Log("MoveSpeed: " + MoveSpeed);
+        float moveInput = Input.GetAxisRaw("Horizontal");
+        Debug.Log("Move Input: " + moveInput);
+        Direction = new Vector2(moveInput, 0);
+        Move(Direction);
+        Walk(Direction);
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            float moveInput = Input.GetAxisRaw("Horizontal");
-            Vector2 vector2 = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-            rb.velocity = vector2;
-
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            }
+            MoveSpeed = 10f * 1.3f;
         }
+        else
+        {
+            MoveSpeed = 10f;
+        }
+
+        isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+
+        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    protected override void Move(Vector2 movement)
     {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            isGrounded = true;
-        }
+        rb.velocity = new Vector2(movement.x, rb.velocity.y);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    void OnDrawGizmosSelected()
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (groundCheck != null)
         {
-            isGrounded = false;
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
         }
     }
 }

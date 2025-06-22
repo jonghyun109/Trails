@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ThreeDPlayerMove : MonoBehaviour
 {
-    public float moveSpeed = 10f;               // ← 속도 빠르게
-    public float jumpForce = 40f;               // ← 강한 점프
+    public float moveSpeed = 10f;             
+    public float jumpForce = 40f;               
     public LayerMask groundLayer;
-    public float groundCheckDistance = 0.8f;    // ← 바닥 판정 거리 증가
-    public float acceleration = 10f;            // ← 부드러운 이동 보간 속도
+    public float groundCheckDistance = 0.8f;    
+    public float acceleration = 10f;         
 
     private Rigidbody rb;
     private Vector3 inputDir;
@@ -30,15 +30,11 @@ public class ThreeDPlayerMove : MonoBehaviour
         {
             Jump();
         }
-
+        MoveSmooth();
         CheckGround();
     }
 
-    void FixedUpdate()
-    {
-        MoveSmooth();
-    }
-
+  
     void MoveSmooth()
     {
         Vector3 targetVelocity = inputDir * moveSpeed;

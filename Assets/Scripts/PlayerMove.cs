@@ -7,36 +7,33 @@ public class PlayerController : WalkerBase
     public Rigidbody2D rb;
 
     public Transform groundCheck;
-    public float groundCheckDistance = 0.1f;
     public LayerMask groundLayer;
 
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        MoveSpeed = 10f;
 
     }
 
     void Update()
     {
-        Debug.Log("MoveSpeed: " + MoveSpeed);
         float moveInput = Input.GetAxisRaw("Horizontal");
-        Debug.Log("Move Input: " + moveInput);
         Direction = new Vector2(moveInput, 0);
-        Move(Direction);
+
         Walk(Direction);
+
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            MoveSpeed = 10f * 1.3f;
+            MoveSpeed = MoveSpeed * 1.3f;
         }
         else
         {
-            MoveSpeed = 10f;
+            MoveSpeed = MoveSpeed;
         }
 
-        isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.05f, groundLayer);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -47,7 +44,7 @@ public class PlayerController : WalkerBase
     }
 
 
-    protected override void Move(Vector2 movement)
+    protected override void Move(Vector3 movement)
     {
         rb.velocity = new Vector2(movement.x, rb.velocity.y);
     }
@@ -57,7 +54,7 @@ public class PlayerController : WalkerBase
         if (groundCheck != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
+            Gizmos.DrawWireSphere(groundCheck.position, 0.05f);
         }
     }
 }

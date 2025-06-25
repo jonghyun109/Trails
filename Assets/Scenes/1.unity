@@ -3043,7 +3043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118504478179339456, guid: f4ead0920d0dc7f4d80aed0f83889c9e, type: 3}
       propertyPath: groundCheckDistance
-      value: 0.2
+      value: -1.03
       objectReference: {fileID: 0}
     - target: {fileID: 3565858194214452343, guid: f4ead0920d0dc7f4d80aed0f83889c9e, type: 3}
       propertyPath: sceneViewId

@@ -3,16 +3,18 @@ using System.Collections;
 
 public class SkillAimer : MonoBehaviour
 {
-    public GameObject skillPrefab;              // ← 이름 변경
+    public GameObject skillPrefab;
     public GameObject rangeIndicatorPrefab;
     public Transform firePoint;
     public float maxRange = 8f;
+    public float skillCoolTime = 3f;
 
     private GameObject rangeInstance;
+    private bool isOnCooldown = false;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&& isOnCooldown == false)
         {
             StartCoroutine(AimAndFire());
         }
@@ -20,38 +22,42 @@ public class SkillAimer : MonoBehaviour
 
     IEnumerator AimAndFire()
     {
-        if (rangeIndicatorPrefab)
-            rangeInstance = Instantiate(rangeIndicatorPrefab);
+        rangeInstance = Instantiate(rangeIndicatorPrefab);
+
+        // 바닥 평면 (y=0 기준)
+        Plane floorPlane = new Plane(Vector3.up, Vector3.zero);
 
         while (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+
+            if (floorPlane.Raycast(ray, out float enter))
             {
+                Vector3 hitPoint = ray.GetPoint(enter); // 마우스 위치와 바닥 평면의 교점
+
                 Vector3 from = firePoint.position;
-                Vector3 dir = hit.point - from;
-                dir.y = 0;
+                Vector3 dir = hitPoint - from;
+                dir.y = 0; // 수평 방향만 사용
 
                 if (dir.magnitude > maxRange)
+                {
                     dir = dir.normalized * maxRange;
+                }
 
                 Vector3 targetPos = from + dir;
-
-                if (rangeInstance)
-                    rangeInstance.transform.position = targetPos;
+                rangeInstance.transform.position = targetPos;
             }
 
             yield return null;
         }
 
-        if (rangeInstance)
-        {
-            Vector3 shootDir = (rangeInstance.transform.position - firePoint.position).normalized;
+        // 마우스를 떼면 발사
+        GameObject skillObj = Instantiate(skillPrefab, firePoint.position, Quaternion.identity);
 
-            GameObject skillObj = Instantiate(skillPrefab, firePoint.position, Quaternion.identity);
-            skillObj.GetComponent<Skill>().Launch(shootDir);
+        skillObj.GetComponent<Skill>().SkillBoom(rangeInstance.transform.position);
 
-            Destroy(rangeInstance);
-        }
+        Destroy(rangeInstance);
     }
+
+
 }

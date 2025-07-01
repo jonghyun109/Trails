@@ -1,42 +1,47 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
     public float speed = 15f;
     public float explodeDelay = 3f;
-    public GameObject explosionEffect;
 
-    private Vector3 direction;
-
-    public void Launch(Vector3 dir)
+    public void SkillBoom(Vector3 targetPos)
     {
-        direction = dir.normalized;
-        StartCoroutine(ExplodeAfterDelay());
+        StartCoroutine(MoveToTargetAndExplode(targetPos));
     }
 
-    void Update()
+    IEnumerator MoveToTargetAndExplode(Vector3 targetPos)
     {
-        transform.position += direction * speed * Time.deltaTime;
-    }
+        while ((targetPos - transform.position).magnitude >= 0.05f)
+        {
+            Vector3 dir = (targetPos - transform.position).normalized;
+            transform.position += dir * speed * Time.deltaTime;
+            yield return null;
+        }
 
-    IEnumerator ExplodeAfterDelay()
-    {
         yield return new WaitForSeconds(explodeDelay);
-        Explode();
+        StartCoroutine(Explode());
     }
 
-    void Explode()
+    IEnumerator Explode()
     {
-        if (explosionEffect)
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        GameObject effect = ObjectPool.Instance.GetEffect();
+        if (effect != null)
+        {
+            effect.transform.position = transform.position;
+            effect.transform.rotation = Quaternion.identity;
+            effect.SetActive(true);
+        }
 
-        Destroy(gameObject);
-    }
+        if(gameObject!=null)
+        gameObject.GetComponentInChildren<Renderer>().enabled = false;
 
-    void OnTriggerEnter(Collider other)
-    {
-        // Optional: 충돌 시 조기 폭발 원하면 여기도 Explode() 호출
-        // Explode();
+        yield return new WaitForSeconds(0.5f);
+
+        if(effect!=null)
+        effect.SetActive(false);
+
+        Destroy(gameObject); 
     }
 }

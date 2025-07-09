@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class SkillAimer : MonoBehaviour
+public class SkillAimer : MonoBehaviourPun
 {
     public GameObject skillPrefab;
     public GameObject rangeIndicatorPrefab;
@@ -14,7 +15,8 @@ public class SkillAimer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)&& isOnCooldown == false)
+
+        if (Input.GetMouseButtonDown(0)&& isOnCooldown == false && photonView.IsMine)
         {
             StartCoroutine(AimAndFire());
         }

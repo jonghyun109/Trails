@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Cinemachine;
 public class Networking : MonoBehaviourPunCallbacks
 {
+    [SerializeField]  CinemachineVirtualCamera cam;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -20,7 +22,14 @@ public class Networking : MonoBehaviourPunCallbacks
         int actorNum = PhotonNetwork.LocalPlayer.ActorNumber;
         string prefabName = actorNum == 1 ? "Player1" : "Player2";
 
-        Vector2 spawnPos = new Vector2(-2 + actorNum * 4, 0); // 간단한 위치 분리
-        PhotonNetwork.Instantiate(prefabName, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = new Vector3(-2 + actorNum * 4, 0);
+        GameObject p = PhotonNetwork.Instantiate(prefabName, spawnPos, Quaternion.identity);
+
+        if (p.GetComponent<PhotonView>().IsMine)
+        {
+            cam.Follow = p.transform;
+            cam.LookAt = p.transform;
+        }
     }
+
 }

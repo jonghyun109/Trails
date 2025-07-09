@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4510898397929472092}
   - component: {fileID: 6131241621071991497}
   - component: {fileID: 5637828610183939768}
+  - component: {fileID: -4564234897628659200}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -120,4 +121,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   explodeDelay: 3
-  explosionEffect: {fileID: 5116783154306723515, guid: b2a6c79421d664147b1bbd1083301145, type: 3}
+--- !u!114 &-4564234897628659200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5950434362750730311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

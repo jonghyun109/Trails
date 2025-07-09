@@ -24,8 +24,9 @@ public class PlayerController : WalkerBase
 
         Walk(Direction);
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
+            Debug.Log("쉬프트 누름");
             MoveSpeed = MoveSpeed * 1.3f;
         }
         else

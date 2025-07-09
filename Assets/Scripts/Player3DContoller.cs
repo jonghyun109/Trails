@@ -11,24 +11,45 @@ public class Player3DController : WalkerBase
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        if(photonView.IsMine)
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.freezeRotation = true;
+        }
+        else if (!photonView.IsMine)
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
     }
 
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Direction = new Vector3(h, 0, v);
-        Walk(Direction);
-
-        CheckGround();
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (photonView.IsMine)
         {
-            Jump();
+            float h = Input.GetAxisRaw("Horizontal");
+            float v = Input.GetAxisRaw("Vertical");
+
+            Direction = new Vector3(h, 0, v);
+            Walk(Direction);
+
+            CheckGround();
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                MoveSpeed = MoveSpeed * 1.3f;
+            }
+            else
+            {
+                MoveSpeed = MoveSpeed;
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                Jump();
+            }
         }
+        
     }
 
     protected override void Move(Vector3 movement)
@@ -47,9 +68,4 @@ public class Player3DController : WalkerBase
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (groundCheckDistance + 0.1f));
-    }
 }

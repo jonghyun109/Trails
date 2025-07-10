@@ -1,11 +1,14 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill : MonoBehaviourPun
 {
     public float speed = 15f;
     public float explodeDelay = 3f;
+    private bool alreadyExploded = false;
 
+    [PunRPC]
     public void SkillBoom(Vector3 targetPos)
     {
         StartCoroutine(MoveToTargetAndExplode(targetPos));
@@ -24,9 +27,23 @@ public class Skill : MonoBehaviour
         StartCoroutine(Explode());
     }
 
+    [PunRPC]
+    public void TriggerExplosion(bool isLightning)
+    {
+        if (alreadyExploded) return;
+        alreadyExploded = true;
+
+        if (isLightning)
+        {
+            explodeDelay = 0f; // Áï½Ã Æø¹ß
+        }
+
+        StartCoroutine(Explode());
+    }
+
     IEnumerator Explode()
     {
-        GameObject effect = ObjectPool.Instance.GetEffect();
+        GameObject effect = ObjectPool.Instance.GetEffect(0);
         if (effect != null)
         {
             effect.transform.position = transform.position;
@@ -34,14 +51,14 @@ public class Skill : MonoBehaviour
             effect.SetActive(true);
         }
 
-        if(gameObject!=null)
-        gameObject.GetComponentInChildren<Renderer>().enabled = false;
+        if (gameObject != null)
+            GetComponentInChildren<Renderer>().enabled = false;
 
         yield return new WaitForSeconds(0.5f);
 
-        if(effect!=null)
-        effect.SetActive(false);
+        if (effect != null)
+            effect.SetActive(false);
 
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
 }

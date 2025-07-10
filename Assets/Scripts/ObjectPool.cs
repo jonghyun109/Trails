@@ -6,10 +6,11 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
 
-    public GameObject effectPrefab;
+    [Header("boom, warning, strike")]
+    public List<GameObject> effectPrefabs;
     public int poolSize = 5;
 
-    private List<GameObject> pool = new List<GameObject>();
+    private List<List<GameObject>> pools = new List<List<GameObject>>();
 
     void Awake()
     {
@@ -25,22 +26,27 @@ public class ObjectPool : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < poolSize; i++)
+        foreach (GameObject prefab in effectPrefabs)
         {
-            GameObject effect = Instantiate(effectPrefab);
-            effect.SetActive(false);
-            pool.Add(effect);
+            List<GameObject> newPool = new List<GameObject>();
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject obj = Instantiate(prefab);
+                obj.SetActive(false);
+                newPool.Add(obj);
+            }
+            pools.Add(newPool);
         }
     }
 
-    public GameObject GetEffect()
+    public GameObject GetEffect(int index)
     {
-        foreach (GameObject effect in pool)
+        if (index < 0 || index >= pools.Count) return null;
+
+        foreach (GameObject obj in pools[index])
         {
-            if (!effect.activeInHierarchy)
-            {
-                return effect;
-            }
+            if (!obj.activeInHierarchy)
+                return obj;
         }
 
         return null;

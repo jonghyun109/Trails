@@ -195,7 +195,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5066121671003378226}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -227,7 +228,7 @@ MonoBehaviour:
   snapPositionThreshold: 0
   snapRotationThreshold: 0
   snapScaleThreshold: 0
-  positionLerpSpeed: 0.85
+  positionLerpSpeed: 0.61
   rotationLerpSpeed: 0.85
   scaleLerpSpeed: 0.85
   timeCorrectionSpeed: 0.1

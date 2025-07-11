@@ -38,9 +38,9 @@ public class Player3DController : WalkerBase
             {
                 MoveSpeed = MoveSpeed * 1.3f;
             }
-            else
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                MoveSpeed = MoveSpeed;
+                MoveSpeed = 10;
             }
 
 

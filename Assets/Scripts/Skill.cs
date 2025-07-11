@@ -7,6 +7,7 @@ public class Skill : MonoBehaviourPun
     public float speed = 15f;
     public float explodeDelay = 3f;
     private bool alreadyExploded = false;
+    Boss_Toad boss;
 
     [PunRPC]
     public void SkillBoom(Vector3 targetPos)
@@ -24,6 +25,7 @@ public class Skill : MonoBehaviourPun
         }
 
         yield return new WaitForSeconds(explodeDelay);
+
         StartCoroutine(Explode());
     }
 
@@ -36,9 +38,12 @@ public class Skill : MonoBehaviourPun
         if (isLightning)
         {
             explodeDelay = 0f; // Áï½Ã Æø¹ß
+            
         }
-
+        boss.TakeDamage(10);
+        ObjectPool.Instance.GetEffect(3);
         StartCoroutine(Explode());
+
     }
 
     IEnumerator Explode()
@@ -50,15 +55,13 @@ public class Skill : MonoBehaviourPun
             effect.transform.rotation = Quaternion.identity;
             effect.SetActive(true);
         }
-
-        if (gameObject != null)
-            GetComponentInChildren<Renderer>().enabled = false;
-
+                
+        GetComponentInChildren<Renderer>().enabled = false;
+        boss.TakeDamage(5);
         yield return new WaitForSeconds(0.5f);
 
-        if (effect != null)
-            effect.SetActive(false);
-
+        effect.SetActive(false);
+        
         Destroy(gameObject);
     }
 }

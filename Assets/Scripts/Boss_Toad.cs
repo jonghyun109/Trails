@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boss_Toad : BossCommand
 {
+
     protected override void Awake()
     {
         moveSpeed = 3.5f;
@@ -11,7 +12,7 @@ public class Boss_Toad : BossCommand
     }
     protected override void SetupPattern()
     {
-        patternQueue.Enqueue(new WalkCommand(this));
+        patternQueue.Enqueue(new IdleCommand(this));
         patternQueue.Enqueue(new ChaseCommand(this));
         patternQueue.Enqueue(new DashSkillCommand(this));
         //patternQueue.Enqueue(new WalkCommand(this));
@@ -23,15 +24,13 @@ public class Boss_Toad : BossCommand
     {
         base.Update();
 
-        if (isExecuting && target != null)
+        if (isExecuting && target != null && canMove)
         {
             Vector3 dir = (target.position - transform.position).normalized;
-            dir.y = 0f; // 수평 회전만 하게끔 Y 제거
+            dir.y = 0f;
 
-            // 이동
             transform.position += dir * moveSpeed * Time.deltaTime;
 
-            // 회전
             if (dir != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(dir);

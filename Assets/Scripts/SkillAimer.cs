@@ -53,7 +53,7 @@ public class SkillAimer : MonoBehaviourPun
             yield return null;
         }
 
-        // 마우스를 떼면 발사
+        //플레이어 1 Boom
         if(PhotonNetwork.IsMasterClient)
         {
             GameObject skillObj = PhotonNetwork.Instantiate("Shooter", firePoint.position, Quaternion.identity);
@@ -64,14 +64,13 @@ public class SkillAimer : MonoBehaviourPun
             }
             Destroy(rangeInstance);
         }
+        //플레이어 2 Lightning
         else
         {
             Vector3 strikePos = rangeInstance.transform.position;
 
-            // 번개 스킬 생성
             GameObject lightning = PhotonNetwork.Instantiate("Lightning", strikePos + Vector3.up * 10f, Quaternion.identity); // 공중에서 떨어지게 생성
 
-            // 번개 낙하 RPC 호출 (모든 클라이언트에게)
             if (lightning.GetComponent<PhotonView>().IsMine)
             {
                 lightning.GetComponent<PhotonView>().RPC("StrikeLightning", RpcTarget.All, strikePos);

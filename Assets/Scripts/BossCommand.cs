@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.AI;
 
 public interface ICommand
 {
@@ -15,19 +14,15 @@ public abstract class BossCommand : MonoBehaviourPun
     public Transform target;
     protected Queue<ICommand> patternQueue = new Queue<ICommand>();
     protected bool isExecuting = false;
-
+    public bool canMove = true;
 
     protected float moveSpeed = 2f;
-    protected int maxHp = 100;
+    [SerializeField]protected int maxHp = 100;
     protected int currentHp;
 
-
-    protected NavMeshAgent agent;
     protected virtual void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; // 수동 회전 제어 (원하면 true)
-        agent.updatePosition = true;
+       
         anim = GetComponent<Animator>();
         currentHp = maxHp;
     }
@@ -42,15 +37,12 @@ public abstract class BossCommand : MonoBehaviourPun
     {
         if (PhotonNetwork.InRoom && !photonView.IsMine) return;
     }
-    public void MoveTo(Vector3 targetPos)
-    {
-        agent.SetDestination(targetPos);
-    }
+    
     protected void NextAction()
     {
         if (patternQueue.Count == 0)
         {
-            SetupPattern(); // 패턴 반복
+            SetupPattern();
         }
 
         ICommand next = patternQueue.Dequeue();
@@ -82,7 +74,7 @@ public abstract class BossCommand : MonoBehaviourPun
     void Die()
     {
         isExecuting = true;
-        anim.Play("Die"); 
+        anim.Play("Die");
         StopAllCoroutines();
 
         Destroy(gameObject, 3f);
@@ -105,7 +97,7 @@ public abstract class BossCommand : MonoBehaviourPun
 
     public void ShowDashPreview(Vector3 direction, float range)
     {
-        // 여기에 선, 박스, 화살표, 디버그 도형 등 표시
+        //사거리 표시 
         Debug.DrawRay(transform.position, direction * range, Color.red, 1f);
     }
     public Vector3 GetTargetDirection()
@@ -132,7 +124,6 @@ public abstract class BossCommand : MonoBehaviourPun
 
         foreach (GameObject p in players)
         {
-            if (!p.activeInHierarchy) continue;
             float dist = Vector3.Distance(transform.position, p.transform.position);
             if (dist < minDist)
             {
@@ -150,17 +141,18 @@ public abstract class BossCommand : MonoBehaviourPun
     }
 }
 
-// 걷기
-public class WalkCommand : ICommand
+//Idle
+public class IdleCommand : ICommand
 {
     private BossCommand boss;
-    public WalkCommand(BossCommand b)
+    public IdleCommand(BossCommand b)
     {
         boss = b;
     }
     public void Execute()
     {
-        boss.PlayAnim("Walk", 1f);
+        boss.canMove = false;
+        boss.PlayAnim("Idle", 1f);
     }
 }
 
@@ -176,9 +168,8 @@ public class ChaseCommand : ICommand
 
     public void Execute()
     {
-        boss.PlayAnim("Run", 2f); // 애니메이션
-        if (boss.target != null)
-            boss.MoveTo(boss.target.position);
+        boss.canMove = true;
+        boss.PlayAnim("Walk", 2f);
     }
 }
 
@@ -201,41 +192,54 @@ public class DashSkillCommand : ICommand
 {
     private BossCommand boss;
     private Vector3 dashDir;
-    private float dashDistance = 5f;
-    private float dashSpeed = 8f;
+    private float dashDistance = 10f;
+    private float dashSpeed = 10f;
+    
+
 
     public DashSkillCommand(BossCommand b)
     {
         boss = b;
-        dashDir = b.GetTargetDirection();
     }
 
     public void Execute()
     {
-        boss.StartCoroutine(ExecuteSkill());
+        boss.StartCoroutine(RushSkill());
     }
 
-    IEnumerator ExecuteSkill()
+    IEnumerator RushSkill()
     {
-        boss.PlayAnim("Scream", 1f, false);
-        boss.ShowDashPreview(dashDir, dashDistance);
+        boss.canMove = false;
+        boss.PlayAnim("Scream", 1.5f, false);
+
         yield return new WaitForSeconds(1f);
 
-        boss.PlayAnim("Run", 0.5f, false);
+        dashDir = boss.GetTargetDirection();
+        boss.ShowDashPreview(dashDir, dashDistance);
+
+        yield return new WaitForSeconds(1.667f);
+
+        boss.canMove = true;
+
         float moved = 0f;
         while (moved < dashDistance)
         {
             float step = dashSpeed * Time.deltaTime;
             boss.transform.position += dashDir * step;
+
+            boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, Quaternion.LookRotation(dashDir), 10f * Time.deltaTime);
+            
             moved += step;
             yield return null;
         }
 
-        boss.PlayAnim("HornAttack", 1f, false);
+
         yield return new WaitForSeconds(1f);
 
-        boss.OnActionComplete(); // 오직 여기서만 완료 처리
+        boss.canMove = false;
+        boss.OnActionComplete();
     }
+
 }
 
 

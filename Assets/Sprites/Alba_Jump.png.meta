@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 126c0101e48d97d43b55337fe89f6b39
+guid: 23dc6daec0d8b24478be73604068b65c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 100_85_0
+      name: Alba_Jump_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8f05da99959eb345b878b373d750ff8
-      internalID: -1526419785
+      spriteID: b9a022a378d53714fb8412b1f221471f
+      internalID: -1845100236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_1
+      name: Alba_Jump_1
       rect:
         serializedVersion: 2
-        x: 100
+        x: 60
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bdc21dabb432a3489afb59624aecbf6
-      internalID: -1430536761
+      spriteID: c96028892347fd2418fb2cfbfe00b210
+      internalID: -1014010764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_2
+      name: Alba_Jump_2
       rect:
         serializedVersion: 2
-        x: 200
+        x: 120
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf06fafa8b224214fb13bc43d5d2a716
-      internalID: 1613641673
+      spriteID: 8dec4ab39970d8149be6e195e4c7a355
+      internalID: -1034665078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_3
+      name: Alba_Jump_3
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad5a3b7db95a3d74590661084de4a4ec
+      internalID: 540609460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alba_Jump_4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 677fcbca7f2acbe4e9674d6411086dc3
+      internalID: 1268359166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alba_Jump_5
       rect:
         serializedVersion: 2
         x: 300
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6936160b4cd356b49adf0323f490a861
-      internalID: 1764690480
+      spriteID: 1c7de3bb0cd3fc14489862d4ed0dadfb
+      internalID: -42789609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_4
+      name: Alba_Jump_6
       rect:
         serializedVersion: 2
-        x: 400
+        x: 360
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +263,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9afec2350e8dc8546801426132856aa5
-      internalID: 731519144
+      spriteID: 553829de4fd26a04d80b3de078ce5b02
+      internalID: -1599230597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_5
+      name: Alba_Jump_7
       rect:
         serializedVersion: 2
-        x: 500
+        x: 420
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,20 +284,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b7e3891ef2372e449158e0b324b4457
-      internalID: 1454967988
+      spriteID: 62b71dac3c71e8e4cb5244b3f0599389
+      internalID: 808160894
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_6
+      name: Alba_Jump_8
       rect:
         serializedVersion: 2
-        x: 600
+        x: 480
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,20 +305,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eea2548d7f95a414897020b7c3e38d1c
-      internalID: -1855011763
+      spriteID: f2cc3f8579c537c40bf969b888b91d71
+      internalID: 1552276940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 100_85_7
+      name: Alba_Jump_9
       rect:
         serializedVersion: 2
-        x: 700
+        x: 540
         y: 0
-        width: 100
-        height: 85
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,50 +326,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9d02ee7115796f408d082c0a10a043d
-      internalID: -2027662030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 100_85_8
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 0
-        width: 100
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c0a9a3a93b935c4384e031716dc3b13
-      internalID: -1616420139
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 100_85_9
-      rect:
-        serializedVersion: 2
-        x: 900
-        y: 0
-        width: 100
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3645a60732ee83546bda149a0c4db0db
-      internalID: -2084805958
+      spriteID: a423ed764ba5ae449b606d46b7360543
+      internalID: 572672864
       vertices: []
       indices: 
       edges: []
@@ -335,7 +335,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3eb365393104d9f449b398776d90834f
+    spriteID: 462b7a4c9fb8b5b4cb704920c4d45cd4
     internalID: 0
     vertices: []
     indices: 
@@ -343,16 +343,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      100_85_0: -1526419785
-      100_85_1: -1430536761
-      100_85_2: 1613641673
-      100_85_3: 1764690480
-      100_85_4: 731519144
-      100_85_5: 1454967988
-      100_85_6: -1855011763
-      100_85_7: -2027662030
-      100_85_8: -1616420139
-      100_85_9: -2084805958
+      Alba_Jump_0: -1845100236
+      Alba_Jump_1: -1014010764
+      Alba_Jump_2: -1034665078
+      Alba_Jump_3: 540609460
+      Alba_Jump_4: 1268359166
+      Alba_Jump_5: -42789609
+      Alba_Jump_6: -1599230597
+      Alba_Jump_7: 808160894
+      Alba_Jump_8: 1552276940
+      Alba_Jump_9: 572672864
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -25,7 +25,7 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
     }
     protected virtual void Die()
     {
-        Debug.Log($"{gameObject.name} Á×À½!");
+        Debug.Log($"{gameObject.name} Á×À½");
     }
     protected abstract void Move(Vector3 movement);
 }

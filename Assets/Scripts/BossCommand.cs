@@ -20,6 +20,9 @@ public abstract class BossCommand : MonoBehaviourPun
     [SerializeField]protected int maxHp = 100;
     protected int currentHp;
 
+
+    protected abstract void SetupPattern();
+
     protected virtual void Awake()
     {
        
@@ -53,10 +56,8 @@ public abstract class BossCommand : MonoBehaviourPun
     public void OnActionComplete()
     {
         isExecuting = false;
-        StartCoroutine(HandlePostAction());
-    }
-
-    protected abstract void SetupPattern();
+        StartCoroutine(Action());
+    }    
 
     public void SetTarget(Transform t)
     {
@@ -109,7 +110,7 @@ public abstract class BossCommand : MonoBehaviourPun
     }
     
 
-    private IEnumerator HandlePostAction()
+    private IEnumerator Action()
     {
         yield return new WaitForSeconds(0.2f);
         UpdateTarget();                       
@@ -133,7 +134,9 @@ public abstract class BossCommand : MonoBehaviourPun
         }
 
         if (closest != null)
+        {
             SetTarget(closest.transform);
+        }
     }
     public void OnDamagedBy(GameObject attacker)
     {

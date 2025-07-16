@@ -45,6 +45,8 @@ MonoBehaviour:
   - SkillBoom
   - StrikeLightning
   - TriggerExplosion
+  - RPC_Respawn
+  - RPC_BroadcastHp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

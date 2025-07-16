@@ -233,6 +233,18 @@ public class DashSkillCommand : ICommand
             boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, Quaternion.LookRotation(dashDir), 10f * Time.deltaTime);
             
             moved += step;
+
+            Collider[] hits = Physics.OverlapSphere(boss.transform.position, 1f, LayerMask.GetMask("Player"));
+            foreach (var hit in hits)
+            {
+                if (hit.TryGetComponent<WalkerBase>(out var player))
+                {
+                    if (player.photonView.IsMine) 
+                    {
+                        player.TakeDamage(2); // 1Ä­ µ¥¹ÌÁö
+                    }
+                }
+            }
             yield return null;
         }
 

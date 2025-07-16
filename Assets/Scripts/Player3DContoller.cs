@@ -1,3 +1,5 @@
+using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 public class Player3DController : WalkerBase
@@ -13,21 +15,22 @@ public class Player3DController : WalkerBase
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         if (photonView.IsMine)
         {
-            rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
             animator = GetComponentInChildren<Animator>();
         }
         else
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+            rb.isKinematic = true;
         }
     }
 
     void Update()
     {
-        if (!photonView.IsMine) return;
+        if (!photonView.IsMine || isDead) return;
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -36,23 +39,21 @@ public class Player3DController : WalkerBase
         Walk(Direction);
 
         // 걷기 애니메이션
-        bool isWalking = Direction.magnitude > 0;
-        animator.SetBool("Walk", isWalking);
+        animator.SetBool("Walk", Direction.magnitude > 0);
 
         // 좌우 반전
         if (h != 0)
         {
             Vector3 scale = transform.localScale;
-            scale.x = Mathf.Sign(h) * Mathf.Abs(scale.x); // 왼쪽이면 음수, 오른쪽이면 양수
+            scale.x = Mathf.Sign(h) * Mathf.Abs(scale.x);
             transform.localScale = scale;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             MoveSpeed *= 1.3f;
         else if (Input.GetKeyUp(KeyCode.LeftShift))
-            MoveSpeed = 10;
+            MoveSpeed = 10f;
 
-        // 점프
         CheckGround();
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -76,4 +77,24 @@ public class Player3DController : WalkerBase
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
     }
+
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+
+        if (photonView.IsMine && animator != null && !isDead)
+        {
+            animator.SetTrigger("Hit"); //  피격 애니메이션
+        }
+    }
+
+    protected override IEnumerator HandleDeath()
+    {
+        if (photonView.IsMine && animator != null)
+        {
+            animator.SetTrigger("Die"); // 죽음 애니메이션
+        }
+
+        return base.HandleDeath();
+    }    
 }

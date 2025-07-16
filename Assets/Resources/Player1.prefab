@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7079348451559719808}
   - component: {fileID: -3654042121362708053}
   - component: {fileID: 5066121671003378226}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1549460719914812198}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 2557957333608648157}
   - component: {fileID: 1564723760653906153}
   - component: {fileID: 848876241440621425}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,9 +376,9 @@ GameObject:
   - component: {fileID: 5415215805511568690}
   - component: {fileID: 602640864086131794}
   - component: {fileID: 5327938372929820357}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: playerSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

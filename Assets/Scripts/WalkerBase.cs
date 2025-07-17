@@ -53,58 +53,59 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
     {
         isDead = true;
         CanWalk = false;
-        gameObject.SetActive(false);
 
-        // 체력 0 전송
         photonView.RPC("RPC_BroadcastHp", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, 0);
 
         if (PhotonNetwork.IsMasterClient)
-            StartCoroutine(RespawnCheckCoroutine());
+        {
+            RespawnManager.Instance.CheckRespawn();
+        }
 
         yield return null;
     }
 
-    private IEnumerator RespawnCheckCoroutine()
-    {
-        float waitTime = 3f;
-        while (waitTime > 0)
-        {
-            if (AnyAlivePlayer())
-            {
-                waitTime -= Time.deltaTime;
-                yield return null;
-            }
-            else
-            {
-                // 전원 사망: 게임오버 등 처리 가능
-                Debug.Log("All players dead.");
-                yield break;
-            }
-        }
+    public bool IsDead() => isDead;
 
-        photonView.RPC("RPC_Respawn", RpcTarget.All);
+    public void ForceRespawn()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Respawn_Internal());
     }
 
-    protected bool AnyAlivePlayer()
-    {
-        foreach (var p in FindObjectsOfType<WalkerBase>())
-        {
-            if (!p.isDead) return true;
-        }
-        return false;
-    }
-
-    [PunRPC]
-    public void RPC_Respawn()
+    private IEnumerator Respawn_Internal()
     {
         HP = 6;
         transform.position = spawnPosition;
-        gameObject.SetActive(true);
         isDead = false;
         CanWalk = true;
 
-        StartCoroutine(Invincibility(1f));
-        photonView.RPC("RPC_BroadcastHp", RpcTarget.All, photonView.Owner.ActorNumber, HP);
+        foreach (var r in GetComponentsInChildren<Renderer>())
+            r.enabled = true;
+
+        foreach (var col in GetComponentsInChildren<Collider>())
+            col.enabled = true;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        var anim = GetComponentInChildren<Animator>();
+        if (anim != null)
+            anim.enabled = true;
+
+        gameObject.SetActive(true);  // 안전하게 마지막에 켜줌
+
+        yield return Invincibility(1f);
+
+        if (photonView != null && photonView.Owner != null)
+        {
+            photonView.RPC("RPC_BroadcastHp", RpcTarget.All, photonView.Owner.ActorNumber, HP);
+        }
     }
 
     [PunRPC]

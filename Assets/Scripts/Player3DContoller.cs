@@ -84,7 +84,7 @@ public class Player3DController : WalkerBase
 
         if (photonView.IsMine && animator != null && !isDead)
         {
-            animator.SetTrigger("Hit"); //  피격 애니메이션
+            animator.SetTrigger("Hit");
         }
     }
 
@@ -92,9 +92,28 @@ public class Player3DController : WalkerBase
     {
         if (photonView.IsMine && animator != null)
         {
-            animator.SetTrigger("Die"); // 죽음 애니메이션
+            animator.SetTrigger("Die");
         }
 
-        return base.HandleDeath();
-    }    
+        foreach (var r in GetComponentsInChildren<Renderer>())
+            r.enabled = false;
+
+        foreach (var col in GetComponentsInChildren<Collider>())
+            col.enabled = false;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        var anim = GetComponentInChildren<Animator>();
+        if (anim != null)
+            anim.enabled = false;
+
+        yield return base.HandleDeath();
+    }
 }

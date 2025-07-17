@@ -5,6 +5,8 @@ using Cinemachine;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] CinemachineVirtualCamera cam;
+    [SerializeField] GameObject player1UI;
+    [SerializeField] GameObject player2UI;
 
     void Start()
     {
@@ -20,10 +22,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         GameObject player = PhotonNetwork.Instantiate(prefabName, spawnPos, Quaternion.identity);
 
-        if (player.GetComponent<PhotonView>().IsMine && cam != null)
+        if (player.GetComponent<PhotonView>().IsMine)
         {
-            cam.Follow = player.transform;
-            cam.LookAt = player.transform;
+            // 카메라 설정
+            if (cam != null)
+            {
+                cam.Follow = player.transform;
+                cam.LookAt = player.transform;
+            }
+
+            // UI 활성화
+            if (actorNum == 1 && player1UI != null)
+            {
+                player1UI.SetActive(true);
+            }
+            else if (actorNum == 2 && player2UI != null)
+            {
+                player2UI.SetActive(true);
+            }
         }
     }
 }

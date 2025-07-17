@@ -4472,6 +4472,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 836380525}
+  player1UI: {fileID: 1710134192}
+  player2UI: {fileID: 1487433315}
 --- !u!4 &2114328931
 Transform:
   m_ObjectHideFlags: 0
@@ -4498,6 +4500,8 @@ GameObject:
   - component: {fileID: 2119461684}
   - component: {fileID: 2119461683}
   - component: {fileID: 2119461685}
+  - component: {fileID: 2119461686}
+  - component: {fileID: 2119461687}
   m_Layer: 0
   m_Name: Respawn_Trigger
   m_TagString: Untagged
@@ -4554,6 +4558,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: {fileID: 1656487973}
+--- !u!114 &2119461686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119461682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69259ffa2fc518b458506edd872fb6c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2119461687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119461682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

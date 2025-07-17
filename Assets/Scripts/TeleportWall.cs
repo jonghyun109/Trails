@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class TeleportWall : MonoBehaviour
 {
@@ -8,13 +9,17 @@ public class TeleportWall : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // 위치 이동
             other.transform.position = respawn.position;
 
-            // 데미지 주기 시도
             if (other.TryGetComponent<WalkerBase>(out var player))
             {
-                player.TakeDamage(6); // 즉사 or 낙사 데미지 (원하는 수치로 조정 가능)
+                player.TakeDamage(6); // 즉사
+            }
+
+            // 마스터 클라이언트면 리스폰 체크 시작
+            if (PhotonNetwork.IsMasterClient)
+            {
+                RespawnManager.Instance.CheckRespawn();
             }
         }
     }

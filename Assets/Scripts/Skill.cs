@@ -44,7 +44,6 @@ public class Skill : MonoBehaviourPun
             explodeDelay = 0f; // Áï½Ã Æø¹ß
             
         }
-        boss.TakeDamage(10);
         ObjectPool.Instance.GetEffect(3);
         StartCoroutine(Explode());
     }
@@ -60,7 +59,6 @@ public class Skill : MonoBehaviourPun
         }
                 
         GetComponentInChildren<Renderer>().enabled = false;
-        boss.TakeDamage(5);
         yield return new WaitForSeconds(0.5f);
 
         effect.SetActive(false);

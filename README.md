@@ -1,5 +1,7 @@
-# TRAILS
+<img width="485" height="485" alt="KakaoTalk_20250711_001551340" src="https://github.com/user-attachments/assets/d7cc7e7b-9496-4923-acac-bf19bc7e2d66" />
 
+
+# TRAILS
 픽셀 아트 감성의 3D 협동 액션 어드벤처 게임 (2인 스토리 모드 지원)
 
 ## 📌 프로젝트 소개

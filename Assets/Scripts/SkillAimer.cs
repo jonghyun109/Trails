@@ -64,19 +64,26 @@ public class SkillAimer : MonoBehaviourPun
             }
             Destroy(rangeInstance);
         }
-        //플레이어 2 Lightning
+        // 플레이어 2 Lightning
         else
         {
             Vector3 strikePos = rangeInstance.transform.position;
 
-            GameObject lightning = PhotonNetwork.Instantiate("Lightning", strikePos + Vector3.up * 10f, Quaternion.identity); // 공중에서 떨어지게 생성
+            GameObject lightning = PhotonNetwork.Instantiate("Lightning", strikePos + Vector3.up * 10f, Quaternion.identity);
 
-            if (lightning.GetComponent<PhotonView>().IsMine)
-            {
-                lightning.GetComponent<PhotonView>().RPC("StrikeLightning", RpcTarget.All, strikePos);
-            }
+            StartCoroutine(SendLightningRPCWithDelay(lightning, strikePos));
 
             Destroy(rangeInstance);
+        }
+
+        IEnumerator SendLightningRPCWithDelay(GameObject lightning, Vector3 strikePos)
+        {
+            yield return null;
+
+            if (lightning.TryGetComponent<PhotonView>(out var pv) && pv.IsMine)
+            {
+                pv.RPC("StrikeLightning", RpcTarget.All, strikePos);
+            }
         }
 
     }

@@ -48,6 +48,12 @@ MonoBehaviour:
   - RPC_Respawn
   - RPC_BroadcastHp
   - RPC_RespawnAll
+  - UpdateHearts
+  - RPC_RespawnTrigger
+  - RPC_UpdateHpUI
+  - RPC_TriggerLocalRespawn
+  - RPC_UpdateHpSlider
+  - RPC_SetHpSlider
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -50,10 +50,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9143228144095690687, guid: 667ffe04c69cc2543943b55c6cdf7bdf, type: 3}
       propertyPath: m_Name
-      value: HCFX_Beam_02 Variant
+      value: Lightning_Effect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9143228144095690687, guid: 667ffe04c69cc2543943b55c6cdf7bdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4654246860678906257}
   m_SourcePrefab: {fileID: 100100000, guid: 667ffe04c69cc2543943b55c6cdf7bdf, type: 3}
+--- !u!1 &8108207217527140114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9143228144095690687, guid: 667ffe04c69cc2543943b55c6cdf7bdf, type: 3}
+  m_PrefabInstance: {fileID: 1037347493200515245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4654246860678906257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8108207217527140114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

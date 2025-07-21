@@ -7,7 +7,7 @@ public class Boss_Toad : BossCommand
     protected override void Awake()
     {
         moveSpeed = 3.5f;
-        maxHp = 200;
+        maxHp = 50;
         base.Awake();
     }
     protected override void SetupPattern()

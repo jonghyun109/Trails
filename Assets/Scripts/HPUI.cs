@@ -1,7 +1,8 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPUI : MonoBehaviour
+public class HPUI : MonoBehaviourPun
 {
     public int targetActorNumber; // 1 or 2 등 (Inspector에서 지정)
     public Image[] heartImages;
@@ -9,21 +10,17 @@ public class HPUI : MonoBehaviour
 
     private int currentHp = 6;
 
-    void Start()
-    {
-        UpdateHearts();
-    }
-
     public void TryUpdateHp(int actorNumber, int newHp)
     {
         if (actorNumber != targetActorNumber) return;
 
-        currentHp = newHp;
-        UpdateHearts();
+        photonView.RPC("UpdateHearts", RpcTarget.All, newHp);
     }
 
-    void UpdateHearts()
+    [PunRPC]
+    void UpdateHearts(int syncedHp)
     {
+        currentHp = syncedHp;
         for (int i = 0; i < heartImages.Length; i++)
         {
             int heartHp = Mathf.Clamp(currentHp - (i * 2), 0, 2);

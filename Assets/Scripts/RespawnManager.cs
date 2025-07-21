@@ -33,12 +33,18 @@ public class RespawnManager : MonoBehaviourPun
             }
             else
             {
-                Debug.Log("All players dead. Game Over");
+                PhotonNetwork.LoadLevel(0); // Àü¸ê ½Ã
                 yield break;
             }
         }
 
-        photonView.RPC("RPC_RespawnAll", RpcTarget.All);
+        foreach (var walker in FindObjectsOfType<WalkerBase>())
+        {
+            if (walker.IsDead())
+            {
+                photonView.RPC("RPC_TriggerLocalRespawn", walker.photonView.Owner);
+            }
+        }
     }
 
     private bool AnyAlivePlayer()
@@ -46,18 +52,21 @@ public class RespawnManager : MonoBehaviourPun
         foreach (var walker in FindObjectsOfType<WalkerBase>())
         {
             if (walker == null) continue;
-
             if (!walker.IsDead()) return true;
         }
         return false;
     }
 
     [PunRPC]
-    private void RPC_RespawnAll()
+    private void RPC_TriggerLocalRespawn()
     {
-        foreach (var walker in FindObjectsOfType<WalkerBase>(true))
+        foreach (var walker in FindObjectsOfType<WalkerBase>())
         {
-            walker.ForceRespawn();
+            if (walker.photonView.IsMine)
+            {
+                walker.ForceRespawn();
+            }
         }
     }
 }
+

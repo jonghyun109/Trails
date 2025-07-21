@@ -4,7 +4,7 @@ using System.Collections;
 
 public abstract class WalkerBase : MonoBehaviourPun, IWalker
 {
-    public int HP { get; private set; } = 6;           // 3칸 = 6
+    public int HP { get; private set; } = 6;
     public float MoveSpeed { get; set; } = 10f;
     public bool CanWalk { get; set; } = true;
     public Vector3 Direction { get; set; } = Vector3.zero;
@@ -39,7 +39,7 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
             StartCoroutine(Invincibility(1f));
         }
 
-        photonView.RPC("RPC_BroadcastHp", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, HP);
+        UpdateHpUI();
     }
 
     protected IEnumerator Invincibility(float duration)
@@ -54,7 +54,7 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
         isDead = true;
         CanWalk = false;
 
-        photonView.RPC("RPC_BroadcastHp", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, 0);
+        UpdateHpUI();
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -68,6 +68,8 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
 
     public void ForceRespawn()
     {
+        if (!photonView.IsMine) return;
+
         StopAllCoroutines();
         StartCoroutine(Respawn_Internal());
     }
@@ -98,24 +100,25 @@ public abstract class WalkerBase : MonoBehaviourPun, IWalker
         if (anim != null)
             anim.enabled = true;
 
-        gameObject.SetActive(true);  // 안전하게 마지막에 켜줌
+        gameObject.SetActive(true);
 
         yield return Invincibility(1f);
 
-        if (photonView != null && photonView.Owner != null)
-        {
-            photonView.RPC("RPC_BroadcastHp", RpcTarget.All, photonView.Owner.ActorNumber, HP);
-        }
+        UpdateHpUI();
+    }
+
+    private void UpdateHpUI()
+    {
+        photonView.RPC("RPC_UpdateHpUI", RpcTarget.All, photonView.Owner.ActorNumber, HP);
     }
 
     [PunRPC]
-    public void RPC_BroadcastHp(int actorNumber, int hp)
+    public void RPC_UpdateHpUI(int actorNumber, int hp)
     {
-        HP = hp;
-
         foreach (var ui in FindObjectsOfType<HPUI>())
         {
-            ui.TryUpdateHp(actorNumber, hp);
+            if (ui.targetActorNumber == actorNumber)
+                ui.TryUpdateHp(actorNumber, hp);
         }
     }
 

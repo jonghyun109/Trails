@@ -95,7 +95,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int count = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCount.text = count.ToString();
 
-        Debug.Log($"[ÀÔÀå] {newPlayer.NickName}, ÃÑ ÀÎ¿ø: {count}");
 
         if (PhotonNetwork.IsMasterClient && count == 2)
         {
@@ -107,7 +106,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int count = PhotonNetwork.CurrentRoom.PlayerCount;
         playerCount.text = count.ToString();
 
-        Debug.Log($"[ÅğÀå] {otherPlayer.NickName}, ÃÑ ÀÎ¿ø: {count}");
 
 
         checkBtn.interactable = true;

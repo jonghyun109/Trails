@@ -7,6 +7,8 @@ public class Skill : MonoBehaviourPun
     public float speed = 15f;
     public float explodeDelay = 3f;
     private bool alreadyExploded = false;
+
+    private int damageAmount = 5;
     Boss_Toad boss;
 
     private void Start()
@@ -30,7 +32,11 @@ public class Skill : MonoBehaviourPun
 
         yield return new WaitForSeconds(explodeDelay);
 
-        StartCoroutine(Explode());
+        if (!alreadyExploded)
+        {
+            alreadyExploded = true;
+            StartCoroutine(Explode(0));
+        }
     }
 
     [PunRPC]
@@ -44,20 +50,32 @@ public class Skill : MonoBehaviourPun
             explodeDelay = 0f; // 즉시 폭발
             
         }
-        ObjectPool.Instance.GetEffect(3);
-        StartCoroutine(Explode());
+        damageAmount = 10;
+        StartCoroutine(Explode(3));
+        Debug.Log("크게 터진다");
     }
 
-    IEnumerator Explode()
+    IEnumerator Explode(int effectId)
     {
-        GameObject effect = ObjectPool.Instance.GetEffect(0);
+        Debug.Log("터짐");
+        GameObject effect = ObjectPool.Instance.GetEffect(effectId);
         if (effect != null)
         {
             effect.transform.position = transform.position;
             effect.transform.rotation = Quaternion.identity;
             effect.SetActive(true);
         }
-                
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, 2f, LayerMask.GetMask("Boss"));
+        foreach (var hit in hits)
+        {
+            Debug.Log($"스킬 맞은 사람 : {hit.name}");
+            if (hit.TryGetComponent<IBossDamageable>(out var boss))
+            {
+                Debug.Log("스킬 맞았는데 데미지 들어가냐?");
+                boss.BossTakeDamage(damageAmount);
+            }
+        }
         GetComponentInChildren<Renderer>().enabled = false;
         yield return new WaitForSeconds(0.5f);
 

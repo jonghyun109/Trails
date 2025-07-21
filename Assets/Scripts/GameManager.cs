@@ -1,18 +1,48 @@
+using Cinemachine;
 using Photon.Pun;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] GameObject player1UI;
     [SerializeField] GameObject player2UI;
+    GameObject boss;
 
+    [SerializeField] private Slider bossHpSlider;
+    [SerializeField] Transform bossSpawnPos;
+    private void Awake()
+    {
+        SpawnBossIfMaster();
+    }
     void Start()
     {
+        boss = GameObject.FindWithTag("Boss");
         SpawnPlayer();
     }
+    private void Update()
+    {
+        if (boss != null && boss.TryGetComponent<BossCommand>(out var bossScript))
+        {
+            bossScript.SetHpSlider(bossHpSlider);
+        }
+    }
+    void SpawnBossIfMaster()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var boss = PhotonNetwork.Instantiate("BossMob", bossSpawnPos.position, Quaternion.identity);
 
+            if (boss.TryGetComponent<PhotonView>(out var pv) && pv.IsMine)
+            {
+                if (bossHpSlider != null && boss.TryGetComponent<BossCommand>(out var bossScript))
+                {
+                    pv.RPC("RPC_SetHpSlider", RpcTarget.AllBuffered);
+                }
+            }
+        }
+    }
     void SpawnPlayer()
     {
         int actorNum = PhotonNetwork.LocalPlayer.ActorNumber;

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public interface ICommand
 {
     void Execute();
 }
 
-public abstract class BossCommand : MonoBehaviourPun
+public abstract class BossCommand : MonoBehaviourPun, IBossDamageable
 {
     protected Animator anim;
     public Transform target;
@@ -17,17 +18,24 @@ public abstract class BossCommand : MonoBehaviourPun
     public bool canMove = true;
 
     protected float moveSpeed = 2f;
-    [SerializeField]protected int maxHp = 100;
-    protected int currentHp;
 
+    [Header("Health")]
+    [SerializeField] protected int maxHp = 100;
+    protected int currentHp;
+    [SerializeField] private Slider hpSlider;
 
     protected abstract void SetupPattern();
 
     protected virtual void Awake()
     {
-       
         anim = GetComponent<Animator>();
         currentHp = maxHp;
+
+        if (hpSlider != null)
+        {
+            hpSlider.maxValue = maxHp;
+            hpSlider.value = currentHp;
+        }
     }
 
     protected virtual void Start()
@@ -41,6 +49,20 @@ public abstract class BossCommand : MonoBehaviourPun
         if (PhotonNetwork.InRoom && !photonView.IsMine) return;
     }
     
+    public void SetHpSlider(Slider slider)
+    {
+        hpSlider = slider;
+        hpSlider.maxValue = maxHp;
+        hpSlider.value = currentHp;
+    }
+    [PunRPC]
+    public void RPC_SetHpSlider()
+    {
+        if (hpSlider == null && hpSlider != null)
+        {
+            SetHpSlider(hpSlider);
+        }
+    }
     protected void NextAction()
     {
         if (patternQueue.Count == 0)
@@ -57,21 +79,42 @@ public abstract class BossCommand : MonoBehaviourPun
     {
         isExecuting = false;
         StartCoroutine(Action());
-    }    
+    }
 
     public void SetTarget(Transform t)
     {
         target = t;
     }
 
-    public virtual void TakeDamage(int amount)
+    public virtual void BossTakeDamage(int amount)
     {
         currentHp -= amount;
+        currentHp = Mathf.Max(0, currentHp);
+
+        photonView.RPC("RPC_UpdateHpSlider", RpcTarget.All, currentHp);
+
         if (currentHp <= 0)
         {
+            Debug.Log("[Boss] Boss died.");
             Die();
         }
     }
+
+    [PunRPC]
+    public void RPC_UpdateHpSlider(int syncedHp)
+    {
+
+        currentHp = syncedHp;
+        if (hpSlider != null)
+        {
+            hpSlider.value = currentHp;
+        }
+        else
+        {
+            Debug.LogWarning("[Boss] hpSlider is null!");
+        }
+    }
+
     void Die()
     {
         isExecuting = true;
@@ -98,24 +141,24 @@ public abstract class BossCommand : MonoBehaviourPun
 
     public void ShowDashPreview(Vector3 direction, float range)
     {
-        //사거리 표시 
         Debug.DrawRay(transform.position, direction * range, Color.red, 1f);
     }
+
     public Vector3 GetTargetDirection()
     {
         if (target == null) return transform.forward;
         Vector3 dir = (target.position - transform.position).normalized;
-        dir.y = 0; // 수평 방향만 유지
+        dir.y = 0;
         return dir;
     }
-    
 
     private IEnumerator Action()
     {
         yield return new WaitForSeconds(0.2f);
-        UpdateTarget();                       
-        NextAction();                       
+        UpdateTarget();
+        NextAction();
     }
+
     protected void UpdateTarget()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -138,6 +181,7 @@ public abstract class BossCommand : MonoBehaviourPun
             SetTarget(closest.transform);
         }
     }
+
     public void OnDamagedBy(GameObject attacker)
     {
         SetTarget(attacker.transform);

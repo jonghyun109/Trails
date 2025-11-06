@@ -6,7 +6,7 @@
 
 <br>
 
-[![YouTube]<img width="580" height="238" alt="youtube logo 05" src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
+[[<img width="580" height="238" alt="youtube logo 05" src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
 <table>
   <tr>
     <td align="center" width="33%">

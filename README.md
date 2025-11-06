@@ -6,19 +6,16 @@
 
 <br>
 
-
-
-
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="<img width="1259" height="746" alt="image (1)" src="https://github.com/user-attachments/assets/b5fcaaca-80a7-4c0c-ad30-049e09331e9f" />" alt="게임 로비 화면" />
+      <img src="https://github.com/user-attachments/assets/b5fcaaca-80a7-4c0c-ad30-049e09331e9f" alt="게임 로비 화면" width="400" />
     </td>
     <td align="center" width="33%">
-      <img src="<img width="1175" height="649" alt="image (3)" src="https://github.com/user-attachments/assets/dd25c53c-113e-424c-8ebb-5dbb5e9bddb9" />" alt="보스전 화면" />
+      <img src="https://github.com/user-attachments/assets/dd25c53c-113e-424c-8ebb-5dbb5e9bddb9" alt="보스전 화면" width="400" />
     </td>
     <td align="center" width="33%">
-      <img src="<img width="1174" height="643" alt="image (2)" src="https://github.com/user-attachments/assets/97a723cf-5aca-4520-9b46-35ff1295ffb7" />" alt="승리 화면" />
+      <img src="https://github.com/user-attachments/assets/97a723cf-5aca-4520-9b46-35ff1295ffb7" alt="승리 화면" width="400" />
     </td>
   </tr>
 </table>

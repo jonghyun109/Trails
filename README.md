@@ -5,7 +5,7 @@
 ### 친구와 함께 하며 스토리의 비밀을 풀어가는 스토리 협동 게임!
 
 <br>
-
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=mAKaPSP8ITU)
 <table>
   <tr>
     <td align="center" width="33%">

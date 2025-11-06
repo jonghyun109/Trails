@@ -3,8 +3,10 @@
 
 # [<img width="60" height="60" alt="Youtube_logo" src="https://github.com/user-attachments/assets/995e39b4-fafe-4e74-ac05-868ae72fde6a" />](https://www.youtube.com/watch?v=mAKaPSP8ITU) TRAILS
 <br>
+
 ### 친구와 함께 하며 스토리의 비밀을 풀어가는 스토리 협동 게임!
 
+<br>
 </div>
 <br>
 

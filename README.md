@@ -1,7 +1,7 @@
 <div align="center">
 
 
-# [<img width="100" height="100" alt="Youtube_logo" src="https://github.com/user-attachments/assets/995e39b4-fafe-4e74-ac05-868ae72fde6a" />](https://www.youtube.com/watch?v=mAKaPSP8ITU) TRAILS
+# [<img width="60" height="60" alt="Youtube_logo" src="https://github.com/user-attachments/assets/995e39b4-fafe-4e74-ac05-868ae72fde6a" />](https://www.youtube.com/watch?v=mAKaPSP8ITU) TRAILS
 ### 친구와 함께 하며 스토리의 비밀을 풀어가는 스토리 협동 게임!
 
 </div>

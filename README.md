@@ -4,9 +4,16 @@
 
 ### 친구와 함께 하며 스토리의 비밀을 풀어가는 스토리 협동 게임!
 
+</div>
+
 <br>
 
-[[<img width="580" height="238" alt="youtube logo 05" src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
+[<img src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" alt="YouTube 플레이 영상" width="300" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
+
+<br>
+
+<div align="center">
+
 <table>
   <tr>
     <td align="center" width="33%">

@@ -1,12 +1,11 @@
+[<img src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" alt="YouTube 플레이 영상" width="200" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
 <div align="center">
 
-# 🎮 TRAILS[<img src="https://github.com/user-attachments/assets/6456329a-bada-41c9-abde-3a8b4c2a8e18" alt="YouTube 플레이 영상" width="200" />](https://www.youtube.com/watch?v=mAKaPSP8ITU)
-<div align="center">
+# 🎮 TRAILS
 ### 친구와 함께 하며 스토리의 비밀을 풀어가는 스토리 협동 게임!
 
 </div>
 
-<br>
 
 
 
